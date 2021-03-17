@@ -31,7 +31,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
                 CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.optIn
+                CompilerArguments.optIn,
+                CompilerArguments.useIR
         )
     }
 }

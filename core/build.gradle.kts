@@ -40,7 +40,8 @@ tasks.withType<KotlinCompile> {
             CompilerArguments.coroutines,
             CompilerArguments.time,
             CompilerArguments.stdLib,
-            CompilerArguments.optIn
+            CompilerArguments.optIn,
+            CompilerArguments.useIR
         )
     }
 }
