@@ -53,7 +53,7 @@ data class EmbedRequest(
 data class EmbedFooterRequest(
         val text: String,
         @SerialName("icon_url")
-        val iconUrl: String? = null,
+        val iconUrl: Optional<String> = Optional.Missing(),
 )
 
 @Serializable
