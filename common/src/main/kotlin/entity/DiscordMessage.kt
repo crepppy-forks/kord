@@ -99,6 +99,7 @@ data class DiscordMessage(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    val thread: Optional<DiscordChannel> = Optional.Missing()
 )
 
 /**
