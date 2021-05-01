@@ -743,7 +743,13 @@ enum class MessageType(val code: Int) {
 
     @Suppress("SpellCheckingInspection")
     GuildDiscoveryRequalified(15),
-    Reply(19);
+    GuildDiscoveryGracePeriodInitialWarning(16),
+    GuildDiscoveryGracePeriodFinalWarning(17),
+    ThreadCreated(18),
+    Reply(19),
+    ApplicationCommand(20),
+    ThreadStarterMessage(21),
+    GuildInviteReminder(22);
 
     companion object MessageTypeSerializer : KSerializer<MessageType> {
 
