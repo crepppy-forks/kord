@@ -591,33 +591,33 @@ sealed class Route<T>(
     @KordPreview
     object GuildApplicationCommandPermissionsGet
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsGet
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsPut
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Put,
+        "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsBatchPut
         : Route<List<DiscordGuildApplicationCommandPermissions>>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
-            serializer()
+        HttpMethod.Put,
+        "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
+        serializer()
     )
 
     object FollowupMessageCreate : Route<DiscordMessage>(
@@ -639,12 +639,76 @@ sealed class Route<T>(
             NoStrategy
         )
 
-    object SelfVoiceStatePatch:
+    object SelfVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/@me", NoStrategy)
 
 
-    object OthersVoiceStatePatch:
+    object OthersVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
+
+    object StartPublicThreadPost :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "/channels/${ChannelId}/messages/${MessageId}/threads",
+            DiscordChannel.serializer()
+        );
+
+    object StartPublicThreadWithoutMessagePost :
+        Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer());
+
+    object JoinThreadPut :
+        Route<Unit>(HttpMethod.Put, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
+
+    object AddThreadMemberPut :
+        Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/thread-members/${UserId}", NoStrategy)
+
+    object LeaveThreadDelete :
+        Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
+
+    object ListThreadMembersGet :
+        Route<List<DiscordThreadMember>>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/thread-members",
+            ListSerializer(DiscordThreadMember.serializer())
+        )
+
+    object ListActiveThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/active",
+            ListThreadsResponse.serializer()
+        )
+
+
+    object ListPrivateThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/private",
+            ListThreadsResponse.serializer()
+        )
+
+
+    object ListPrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
+    object ListPublicArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/archived/public",
+            ListThreadsResponse.serializer()
+        )
+
+    object ListJoinedPrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/users/@me/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
