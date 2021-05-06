@@ -3,6 +3,7 @@ package dev.kord.rest.json.request
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -57,26 +58,33 @@ data class ChannelPermissionEditRequest(
     val type: OverwriteType
 )
 @Serializable
-data class StartPublicThreadRequest(
+data class StartThreadRequest(
     val name: String,
     val autoArchiveDuration: Int
 )
 
 enum class ArchieveDuration(val duration: Int) {
+    Unknown(Int.MAX_VALUE),
     Hour(60),
     Day(1440),
     ThreeDays(4320),
     Week(10080);
     object Serializer : KSerializer<ArchieveDuration> {
         override fun deserialize(decoder: Decoder): ArchieveDuration {
-            return decoder.decodeEnum(descriptor)
+            val value = decoder.decodeInt()
+            return values().firstOrNull { it.duration == value } ?: Unknown
         }
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, value: ArchieveDuration) {
-            TODO("Not yet implemented")
+            encoder.encodeInt(value.duration)
         }
     }
 }
+
+data class ListThreadsRequest(
+    val before: Snowflake? = null,
+    val limit: Int? = null
+)
