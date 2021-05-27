@@ -67,7 +67,7 @@ data class ResolvedObjectsData(
     }
 }
 
-interface ApplicationInteractionData {
+sealed class ApplicationInteractionData {
     companion object {
 
         fun from(
@@ -90,7 +90,7 @@ data class ApplicationCommandInteractionData(
     val name: String,
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing()
-) : ApplicationInteractionData {
+) : ApplicationInteractionData() {
     companion object {
         fun from(
             data: DiscordApplicationCommandInteractionData,
@@ -114,7 +114,7 @@ data class ApplicationCommandInteractionData(
 data class ApplicationComponentInteractionData(
     val customId: Optional<String> = Optional.Missing(),
     val componentType: ComponentType
-) : ApplicationInteractionData {
+) : ApplicationInteractionData() {
     companion object {
         fun from(
             data: DiscordApplicationComponentCallbackData,
