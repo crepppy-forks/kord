@@ -45,8 +45,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
  */
 @OptIn(ExperimentalContracts::class)
 @KordPreview
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(
-    content: String,
+suspend inline fun EphemeralInteractionResponseBehavior.ephemeralFollowUp(
     builder: EphemeralFollowupMessageCreateBuilder.() -> Unit = {}
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -61,14 +60,13 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
  * Follows-up this interaction response with a [PublicFollowupMessage]
  *
  * This function assumes that this interaction response has content in it.
- * Use [the safe method overload][EphemeralInteractionResponseBehavior.followUp] if you are unsure
  *
  * @return created [PublicFollowupMessage]
  */
 @OptIn(ExperimentalContracts::class)
 @KordPreview
 @KordUnsafe
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(
+suspend inline fun EphemeralInteractionResponseBehavior.publicFollowUp(
     builder: PublicFollowupMessageCreateBuilder.() -> Unit
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

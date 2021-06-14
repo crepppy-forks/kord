@@ -127,13 +127,11 @@ suspend inline fun InteractionBehavior.respondPublic(
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respondEphemeral(
-    content: String,
     builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
 ): EphemeralInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = EphemeralInteractionResponseCreateBuilder().apply(builder)
-    val request = builder.toRequest()
+    val request = EphemeralInteractionResponseCreateBuilder().apply(builder).toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
 

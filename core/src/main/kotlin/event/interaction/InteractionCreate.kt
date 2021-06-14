@@ -20,7 +20,7 @@ import dev.kord.core.event.Event
  * * [respondEphemeral][Interaction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
  *
  * Once an interaction has been acknowledged,
- * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
+ * you can use [PublicInteractionResponseBehavior.publicFollowUp] or [EphemeralInteractionResponseBehavior.ephemeralFollowUp] to display additional messages.
  *
  * The resulting follow-up message and its methods may differ based on which method is used.
  * * Following up an acknowledgement results in replacing "The bot is thinking" prompt with the follow-up content.
